@@ -1,3 +1,3 @@
 # Arduino - Home Station
 
-![HOMESTATION](https://github.com/humanoidvani/Arduino/blob/master/homeStation.jpg)
+![HOMESTATION](https://github.com/humanoidvani/Arduino/ReadMePage/homeStation.jpg )
