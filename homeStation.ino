@@ -7,6 +7,10 @@ int DHThumidity = 0;
 
 /* LIGHT */
 int LIGHTpin = 2;
+int LIGHTval;
+int LIGHTadjustedVal;
+int LIGHTmin;
+int LIGHTmax;
 
 /* GAS SENSOR */
 const int GasAOUTpin = 0; //the AOUT pin of the CO sensor goes into analog pin A0 of the arduino
@@ -45,6 +49,11 @@ void setup()
 
   /* DHT */
   dht.begin();
+
+  /* LIGHT */
+  LIGHTval = analogRead(LIGHTpin);
+  LIGHTmin = LIGHTval;
+  LIGHTmax = LIGHTval;
   
   /* LCD */
   lcd.begin(20, 4); //define o LCD 20 cols and 4 lines
@@ -74,8 +83,13 @@ void loop()
 
   /* LIGHT */
   int LIGHTval = analogRead(LIGHTpin);
+  if (LIGHTval > LIGHTmax) LIGHTmax = LIGHTval;
+  if (LIGHTval < LIGHTmin) LIGHTmin = LIGHTval;
+  LIGHTval = constrain(LIGHTval, LIGHTmin, LIGHTmax);
+  LIGHTadjustedVal = map(LIGHTval, LIGHTmin, LIGHTmax, 100, 0); 
+  clearRowFrom(8, 1);
   lcd.setCursor(8, 1);
-  lcd.print(LIGHTval);
+  lcd.print(String(LIGHTval) + "|" + String(LIGHTadjustedVal));
 
   /* DHT */
   // Reading temperature or humidity takes about 250 milliseconds!
